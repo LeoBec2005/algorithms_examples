@@ -1,0 +1,9 @@
+*
+
+# allow C++ source, folders and header files
+!*/
+!*.cpp
+!*.h
+
+!*.md
+!.gitignore
