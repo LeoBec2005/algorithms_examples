@@ -52,6 +52,20 @@ struct List {
         }
     }
 
+    void pop_back() {
+        Node* temp = tail;
+        tail = tail->forward;
+        tail->next = nullptr;
+        delete temp;
+    }
+
+    void pop_front() {
+        Node* temp = head;
+        head = head->next;
+        head->forward = nullptr;
+        delete temp;
+    }
+
 };
 
 int main() {
@@ -66,7 +80,10 @@ int main() {
     list_1.push_back(9);
     list_1.print();
 
-
-
+    list_1.pop_back();
+    list_1.pop_back();
+    list_1.pop_front();
+    list_1.pop_front();
+    list_1.print();
 
 }
