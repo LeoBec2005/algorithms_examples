@@ -133,13 +133,36 @@ struct List {
             temp->prev = new_node;
             new_node->next = temp;
         }
+    }
 
+    void erase(int pos) {
+        if (pos >= list_length() or pos < 0) {
+            std::cout << "the position is not valid!" << std::endl;
+            return;
+        }
+        Node* temp = head;
+        for (int i = 0; i < pos; i++) {
+            temp = temp->next;
+        }
+
+        if (temp == head) {
+            pop_front();
+        }
+        else if (temp == tail) {
+            pop_back();
+        }
+        else {
+            temp->prev->next = temp->next;
+            temp->next->prev = temp->prev;
+            delete temp;
+        }
     }
 
 };
 
 int main() {
     List list_1;
+    //push front and back test
     list_1.push_front(2);
     list_1.push_front(4);
     list_1.push_front(6);
@@ -151,33 +174,37 @@ int main() {
     list_1.print_backward();
     list_1.print_forward();
 
-
+    //pop front and back test
     list_1.pop_back();
     list_1.pop_back();
     list_1.pop_front();
     list_1.pop_front();
     list_1.print_forward();
 
+    //insert test
     list_1.insert(2, 10);
     list_1.print_forward();
-
     list_1.insert(3, 11);
     list_1.print_forward();
-
     list_1.insert(0, 12);
     list_1.print_forward();
-
     list_1.insert(7, 13);
     list_1.print_forward();
 
-    list_1.insert(100, 14);
+    //erase test
+    list_1.erase(4);
+    list_1.print_forward();
+    list_1.erase(0);
+    list_1.print_forward();
+    list_1.erase(5);
+    list_1.print_forward();
+    list_1.erase(2);
     list_1.print_forward();
 
-    list_1.insert(-100, 15);
-    list_1.print_forward();
-
+    //list length test
     std::cout << list_1.list_length() << std::endl;
 
+    //find test
     std::cout << list_1.find(4) << std::endl;
     std::cout << list_1.find(2) << std::endl;
     std::cout << list_1.find(6) << std::endl;
