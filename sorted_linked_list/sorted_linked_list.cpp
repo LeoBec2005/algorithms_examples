@@ -72,19 +72,84 @@ struct SortedList {
             new_node->next = temp;
         }
     }
+
+    int list_length() {
+        int length = 0;
+        for (Node* temp = head; temp != nullptr; temp = temp->next) {
+            length++;
+        }
+        return length;
+    }
+
+    void erase(int pos) {
+        if (pos >= list_length() or pos < 0) {
+            std::cout << "the position is not valid!" << std::endl;
+            return;
+        }
+        Node* temp = head;
+        for (int i = 0; i < pos; i++) {
+            temp = temp->next;
+        }
+
+        if (temp == head) {
+            if (head == nullptr) return;
+            if (head == tail) {
+                delete head;
+                head = tail = nullptr;
+                return;
+            }
+            Node* temp = head;
+            head = head->next;
+            head->prev = nullptr;
+            delete temp;
+        }
+        else if (temp == tail) {
+            Node* temp = tail;
+            tail = tail->prev;
+            tail->next = nullptr;
+            delete temp;
+        }
+        else {
+            temp->prev->next = temp->next;
+            temp->next->prev = temp->prev;
+            delete temp;
+        }
+    }
 };
 
 
 int main()
 {
     SortedList list_1;
+
+    //insert test
     list_1.insert(4);
     list_1.insert(7);
     list_1.insert(1);
     list_1.insert(0);
     list_1.insert(3);
+    list_1.insert(5);
     list_1.print_forward();
     list_1.print_backward();
+
+    //erase test
+    list_1.erase(4);
+    list_1.print_forward();
+    list_1.erase(0);
+    list_1.print_forward();
+    list_1.erase(5);
+    list_1.print_forward();
+    list_1.erase(2);
+    list_1.print_forward();
+    list_1.erase(2);
+    list_1.print_forward();
+    list_1.erase(1);
+    list_1.print_forward();
+    list_1.erase(0);
+    list_1.print_forward();
+    list_1.erase(0);
+    list_1.print_forward();
+
 
 }
 
