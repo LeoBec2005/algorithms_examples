@@ -1,20 +1,66 @@
-// deque.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+
+struct Deque {
+    int map_size = 5;
+    int block_size = 5;
+    int start_block = map_size / 2;
+    int finish_block = map_size / 2;
+    int start_offset = block_size /2;
+    int finish_offset = (block_size / 2)+1;
+    int** map = new int*[map_size]();
+
+    Deque() {
+        map[start_block] = new int[block_size]();
+    }
+
+    void print() {
+        for (int i = start_block; i <= finish_block; i++) {
+            for (int j = 0; j < block_size; j++) {
+                std::cout << map[i][j]<<" , ";
+            }
+        }
+        std::cout << std::endl;
+    }
+
+    void push_front(int x) {
+        map[start_block][start_offset] = x;
+        start_offset--;
+
+        if (start_offset < 0) {
+            start_block--;
+            start_offset = block_size - 1;
+            map[start_block] = new int[block_size]();
+        }
+    }
+
+    void push_back(int x) {
+        map[finish_block][finish_offset] = x;
+        finish_offset++;
+
+        if (finish_offset >= block_size) {
+            finish_block++;
+            finish_offset = 0;
+            map[finish_block] = new int[block_size]();
+        }
+    }
+};
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Deque deque_1;
+
+    deque_1.push_front(2);
+    deque_1.push_front(4);
+    deque_1.push_front(6);
+    deque_1.push_front(7);
+    deque_1.push_back(8);
+    deque_1.push_back(1);
+    deque_1.push_back(3);
+    deque_1.push_back(5);
+    deque_1.push_back(5);
+    deque_1.print();
+
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
