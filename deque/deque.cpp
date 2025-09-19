@@ -14,17 +14,19 @@ struct Deque {
     }
 
     void print() {
-        int i = start_block;
-        int j = start_offset;
-        while (j <= finish_offset and i <= finish_block) {
+        int j = start_offset+1;
+        for(int i = start_block; i <= finish_block;i++){
             while (j < block_size) {
+                if (i >= finish_block and j >= finish_offset){
+                    std::cout<<std::endl;
+                    return;
+                }
                 std::cout << map[i][j] << " , ";
                 j++;
             }
+            //std::cout<<" | ";
             j = 0;
-            i++;
         }
-        std::cout << "end" << std::endl;
     }
 
     void push_front(int x) {
@@ -52,7 +54,7 @@ struct Deque {
     void pop_front() {
         start_offset++;
 
-        if (start_offset > block_size) {
+        if (start_offset >= block_size) {
             start_offset = 0;
             delete[] map[start_block];
             start_block++;
@@ -89,15 +91,24 @@ int main()
     deque_1.pop_back();
     deque_1.print();
     deque_1.pop_back();
+    deque_1.print();
     deque_1.pop_back();
+    deque_1.print();
     deque_1.pop_back();
+    deque_1.print();
     deque_1.pop_back();
-    deque_1.pop_front();
-    deque_1.pop_front();
+    deque_1.print();
     deque_1.pop_front();
     deque_1.print();
-
-
+    deque_1.pop_front();
+    deque_1.print();
+    deque_1.pop_front();
+    deque_1.print();
+    deque_1.pop_front();
+    deque_1.print();
+    deque_1.pop_front();
+    deque_1.print();
+    std::cout<<"end"<<std::endl;
 
 }
 
