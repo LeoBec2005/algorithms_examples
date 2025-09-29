@@ -31,8 +31,8 @@ struct Deque {
 
     void resize(){
         int new_map_size = map_size * 2;
-        int new_finish_block = new_map_size + (finish_block - (map_size/2));
-        int new_start_block = new_map_size - ((map_size/2) - start_block);
+        int new_finish_block = (new_map_size/2) + (finish_block - (map_size/2));
+        int new_start_block = (new_map_size/2) - ((map_size/2) - start_block);
         int** new_map = new int*[new_map_size]();
 
         for (int i = start_block; i<= finish_block; i++){
@@ -124,6 +124,20 @@ int main()
     deque_1.push_back(5);
     deque_1.push_back(4);
     deque_1.push_back(12);
+    deque_1.push_back(3);
+    deque_1.push_back(5);
+    deque_1.push_back(5);
+    deque_1.push_back(4);
+    deque_1.push_back(12);
+    deque_1.push_back(3);
+    deque_1.push_back(5);
+    deque_1.push_back(5);
+    deque_1.push_back(4);
+    deque_1.push_back(12);
+    deque_1.push_back(4);
+    deque_1.push_back(4);
+
+
     deque_1.print();
 
     deque_1.pop_back();
