@@ -35,7 +35,7 @@ struct Deque {
         int new_start_block = (new_map_size/2) - ((map_size/2) - start_block);
         int** new_map = new int*[new_map_size]();
 
-        for (int i = start_block; i<= finish_block; i++){
+        for (int i = 0; i<= finish_block-start_block; i++){
             new_map[new_start_block+i] = map[start_block+i];
         }
 
@@ -45,6 +45,7 @@ struct Deque {
         map_size = new_map_size;
         start_block = new_start_block;
         finish_block = new_finish_block;
+        std::cout<<"map resized!"<<std::endl;
     }
 
     void push_front(int x) {
@@ -57,7 +58,7 @@ struct Deque {
             map[start_block] = new int[block_size]();
         }
 
-        if (start_block < 0){
+        if (start_block <= 0 and start_offset<= 0){
             resize();
         }
     }
@@ -105,7 +106,11 @@ int main()
     deque_1.push_front(2);
     deque_1.push_front(4);
     deque_1.push_front(6);
-    deque_1.push_front(7);
+    //deque_1.push_front(1);
+    //deque_1.push_front(2);
+    //deque_1.push_front(3);
+    //deque_1.push_front(4);
+    //deque_1.push_front(5);
     deque_1.push_back(8);
     deque_1.push_back(1);
     deque_1.push_back(3);
@@ -113,29 +118,21 @@ int main()
     deque_1.push_back(5);
     deque_1.push_back(4);
     deque_1.push_back(12);
-    deque_1.push_front(2);
-    deque_1.push_front(4);
-    deque_1.push_front(6);
-    deque_1.push_front(7);
-    deque_1.push_back(8);
     deque_1.push_back(1);
+    deque_1.push_back(2);
     deque_1.push_back(3);
-    deque_1.push_back(5);
-    deque_1.push_back(5);
     deque_1.push_back(4);
-    deque_1.push_back(12);
+    deque_1.push_back(5);
+    deque_1.push_back(1);
+    deque_1.push_back(2);
     deque_1.push_back(3);
-    deque_1.push_back(5);
-    deque_1.push_back(5);
     deque_1.push_back(4);
-    deque_1.push_back(12);
+    deque_1.push_back(5);
+    deque_1.push_back(1);
+    deque_1.push_back(2);
     deque_1.push_back(3);
+    deque_1.push_back(4);
     deque_1.push_back(5);
-    deque_1.push_back(5);
-    deque_1.push_back(4);
-    deque_1.push_back(12);
-    deque_1.push_back(4);
-    deque_1.push_back(4);
 
 
     deque_1.print();
