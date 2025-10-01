@@ -13,6 +13,23 @@ struct Deque {
 		map[start_block] = new int[block_size]();
 	}
 
+	~Deque() {
+		clear();
+	}
+
+	void print_structure() {
+		for (int i = 0; i < map_size; i++) {
+			if (map[i] != nullptr) {
+				for (int j = 0; j < block_size; j++) {
+					std::cout << map[i][j];
+					if (j < block_size - 1) std::cout << " , ";
+				}
+			}
+			std::cout << " | ";
+		}
+		std::cout << std::endl;
+	}
+
 	void print() {
 		int j = start_offset + 1;
 		for (int i = start_block; i <= finish_block; i++) {
@@ -21,12 +38,21 @@ struct Deque {
 					std::cout << std::endl;
 					return;
 				}
-				std::cout << map[i][j] << " , ";
+				std::cout << map[i][j];
+				if (j < block_size - 1) std::cout << " , ";
 				j++;
 			}
 			std::cout << " | ";
 			j = 0;
 		}
+	}
+
+	void clear() {
+		for (int i = 0; i <= finish_block - start_block; i++) {
+			delete[] map[start_block + i];
+		}
+		delete[] map;
+		std::cout << "map deleted!" << std::endl;
 	}
 
 	void resize() {
@@ -39,7 +65,7 @@ struct Deque {
 			new_map[new_start_block + i] = map[start_block + i];
 		}
 
-		//delete[] map;
+		delete[] map;
 
 		map = new_map;
 		map_size = new_map_size;
@@ -49,31 +75,29 @@ struct Deque {
 	}
 
 	void push_front(int x) {
-		if (start_block < 0) {
-			resize();
-		}
-
 		map[start_block][start_offset] = x;
 		start_offset--;
 
 		if (start_offset < 0) {
 			start_block--;
 			start_offset = block_size - 1;
+			if (start_block < 0) {
+				resize();
+			}
 			map[start_block] = new int[block_size]();
 		}
 	}
 
 	void push_back(int x) {
-		if (finish_block > map_size) {
-			resize();
-		}
-
 		map[finish_block][finish_offset] = x;
 		finish_offset++;
 
 		if (finish_offset >= block_size) {
 			finish_block++;
 			finish_offset = 0;
+			if (finish_block >= map_size) {
+				resize();
+			}
 			map[finish_block] = new int[block_size]();
 		}
 	}
@@ -84,6 +108,7 @@ struct Deque {
 		if (start_offset >= block_size) {
 			start_offset = 0;
 			delete[] map[start_block];
+			map[start_block] = nullptr;
 			start_block++;
 		}
 	}
@@ -94,6 +119,7 @@ struct Deque {
 		if (finish_offset < 0) {
 			finish_offset = block_size - 1;
 			delete[] map[finish_block];
+			map[finish_block] = nullptr;
 			finish_block--;
 		}
 	}
@@ -133,12 +159,8 @@ int main()
 	deque_1.push_back(4);
 	deque_1.push_back(5);
 	deque_1.push_back(1);
-	deque_1.push_back(2);
-	deque_1.push_back(3);
-	deque_1.push_back(4);
-	deque_1.push_back(5);
-	deque_1.push_back(5);
 	deque_1.print();
+	deque_1.print_structure();
 
 	deque_1.pop_back(); deque_1.print();
 	deque_1.pop_back(); deque_1.print();
@@ -150,6 +172,8 @@ int main()
 	deque_1.pop_front(); deque_1.print();
 	deque_1.pop_front(); deque_1.print();
 	deque_1.pop_front(); deque_1.print();
+	deque_1.pop_front();  deque_1.print();
+	deque_1.print_structure();
 	std::cout << "end" << std::endl;
 
 }
