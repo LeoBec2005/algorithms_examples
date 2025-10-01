@@ -39,7 +39,7 @@ struct Deque {
             new_map[new_start_block+i] = map[start_block+i];
         }
 
-        delete[] map;
+        //delete[] map;
 
         map = new_map;
         map_size = new_map_size;
@@ -49,6 +49,10 @@ struct Deque {
     }
 
     void push_front(int x) {
+        if (start_block < 0) {
+            resize();
+        }
+
         map[start_block][start_offset] = x;
         start_offset--;
 
@@ -57,13 +61,13 @@ struct Deque {
             start_offset = block_size - 1;
             map[start_block] = new int[block_size]();
         }
-
-        if (start_block <= 0 and start_offset<= 0){
-            resize();
-        }
     }
 
     void push_back(int x) {
+        if (finish_block > map_size) {
+            resize();
+        }
+
         map[finish_block][finish_offset] = x;
         finish_offset++;
 
@@ -71,11 +75,7 @@ struct Deque {
             finish_block++;
             finish_offset = 0;
             map[finish_block] = new int[block_size]();
-        }
-
-        if (finish_block >= map_size){
-            resize();
-        }
+        } 
     }
 
     void pop_front() {
@@ -106,11 +106,13 @@ int main()
     deque_1.push_front(2);
     deque_1.push_front(4);
     deque_1.push_front(6);
-    //deque_1.push_front(1);
-    //deque_1.push_front(2);
-    //deque_1.push_front(3);
-    //deque_1.push_front(4);
-    //deque_1.push_front(5);
+    /*
+    deque_1.push_front(1);
+    deque_1.push_front(2);
+    deque_1.push_front(3);
+    deque_1.push_front(4);
+    deque_1.push_front(5);
+    */
     deque_1.push_back(8);
     deque_1.push_back(1);
     deque_1.push_back(3);
@@ -118,6 +120,13 @@ int main()
     deque_1.push_back(5);
     deque_1.push_back(4);
     deque_1.push_back(12);
+    /*
+    deque_1.push_back(1);
+    deque_1.push_back(2);
+    deque_1.push_back(3);
+    deque_1.push_back(4);
+    deque_1.push_back(5);
+    */
     deque_1.push_back(1);
     deque_1.push_back(2);
     deque_1.push_back(3);
@@ -128,35 +137,19 @@ int main()
     deque_1.push_back(3);
     deque_1.push_back(4);
     deque_1.push_back(5);
-    deque_1.push_back(1);
-    deque_1.push_back(2);
-    deque_1.push_back(3);
-    deque_1.push_back(4);
     deque_1.push_back(5);
-
-
     deque_1.print();
 
-    deque_1.pop_back();
-    deque_1.print();
-    deque_1.pop_back();
-    deque_1.print();
-    deque_1.pop_back();
-    deque_1.print();
-    deque_1.pop_back();
-    deque_1.print();
-    deque_1.pop_back();
-    deque_1.print();
-    deque_1.pop_front();
-    deque_1.print();
-    deque_1.pop_front();
-    deque_1.print();
-    deque_1.pop_front();
-    deque_1.print();
-    deque_1.pop_front();
-    deque_1.print();
-    deque_1.pop_front();
-    deque_1.print();
+    deque_1.pop_back(); deque_1.print();
+    deque_1.pop_back(); deque_1.print();
+    deque_1.pop_back(); deque_1.print();
+    deque_1.pop_back(); deque_1.print();    
+    deque_1.pop_back();  deque_1.print();   
+    deque_1.pop_front(); deque_1.print();     
+    deque_1.pop_front(); deque_1.print();    
+    deque_1.pop_front(); deque_1.print();    
+    deque_1.pop_front(); deque_1.print();    
+    deque_1.pop_front(); deque_1.print();
     std::cout<<"end"<<std::endl;
 
 }
