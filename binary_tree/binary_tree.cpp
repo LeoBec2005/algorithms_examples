@@ -104,16 +104,25 @@ public:
 		}
 
 		if (temp->left == nullptr and temp->right == nullptr) {
-
+			delete temp;
+			temp = nullptr;
 		}
 		else if (temp->left != nullptr and temp->right == nullptr) {
-
+			Node* temp_2 = temp->left;
+			temp->left = temp_2->left;
+			temp->data = temp_2->data;
+			delete temp_2;
 		}
 		else if (temp->left == nullptr and temp->right != nullptr) {
-
+			Node* temp_2 = temp->right;
+			temp->right = temp_2->right;
+			temp->data = temp_2->data;
+			delete temp_2;
 		}
 		else if (temp->left != nullptr and temp->right != nullptr) {
-
+			int previous_data = previous_value(x);
+			del(previous_data);
+			temp->data = previous_data;
 		}
 	}
 
@@ -148,11 +157,12 @@ int main()
 	tree_1.insert(0);
 	tree_1.insert(16);
 	tree_1.insert(13);
-	tree_1.insert(8);
+	tree_1.insert(30);
 	tree_1.insert(9);
-	tree_1.insert(18);
-	tree_1.insert(19);
 	tree_1.insert(20);
+	tree_1.insert(19);
+	tree_1.insert(18);
+	tree_1.print_in_order();
 
 	std::cout << tree_1.find(10) << std::endl;
 	std::cout << tree_1.find(2) << std::endl;
@@ -160,6 +170,12 @@ int main()
 	std::cout << tree_1.find(12) << std::endl;
 	std::cout << tree_1.find(13) << std::endl;
 
+	tree_1.del(30);
+	tree_1.del(9);
+	tree_1.del(3);
+	tree_1.del(10);
+	tree_1.del(18);
+	tree_1.del(2);
 	tree_1.print_in_order();
 }
 
