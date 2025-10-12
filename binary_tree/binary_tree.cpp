@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 struct Node {
 	int data;
@@ -41,7 +42,24 @@ private:
 		}
 		return temp;
 	}
+
+	int height(Node* next) {
+		if (next == nullptr)return 0;
+		return ((std::max(height(next->left), height(next->right))) + 1);
+	}
 public:
+	~BinaryTree() {
+		clear(head);
+		std::cout << "tree deleted!" << std::endl;
+	}
+
+	void clear(Node* next) {
+		if (next == nullptr)return;
+		clear(next->left);
+		clear(next->right);
+		delete next;
+	}
+
 	void print_in_order() {
 		in_order(head);
 		std::cout << std::endl;
@@ -137,6 +155,10 @@ public:
 			}
 		}
 	}
+
+	int tree_height() {
+		return height(head);
+	}
 };
 
 int main()
@@ -158,11 +180,15 @@ int main()
 	tree_1.insert(18);
 	tree_1.print_in_order();
 
+	std::cout << std::endl<<"tree height: " << tree_1.tree_height() << std::endl << std::endl;
+
 	tree_1.del(9); tree_1.print_in_order();
 	tree_1.del(30);	tree_1.print_in_order();
 	tree_1.del(3);	tree_1.print_in_order();
 	tree_1.del(10);	tree_1.print_in_order();
 	tree_1.del(18);	tree_1.print_in_order();
 	tree_1.del(2);	tree_1.print_in_order();
+
+	std::cout << std::endl << "tree height: " << tree_1.tree_height() << std::endl << std::endl;
 }
 
