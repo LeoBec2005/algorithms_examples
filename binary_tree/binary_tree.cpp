@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <queue>
 
 struct Node {
 	int data;
@@ -159,6 +160,26 @@ public:
 	int tree_height() {
 		return height(head);
 	}
+
+	void BFS() {
+		if (head == nullptr) return;
+		std::queue<Node*> data_queue;
+		Node* node;
+		data_queue.push(head);
+
+		while (data_queue.empty() == 0) {
+			node = data_queue.front();
+			data_queue.pop();
+			std::cout << node->data << " , ";
+			if (node->left != nullptr) {
+				data_queue.push(node->left);
+			}
+			if (node->right != nullptr) {
+				data_queue.push(node->right);
+			}
+		}
+		std::cout << std::endl;
+	}
 };
 
 int main()
@@ -180,7 +201,11 @@ int main()
 	tree_1.insert(18);
 	tree_1.print_in_order();
 
-	std::cout << std::endl<<"tree height: " << tree_1.tree_height() << std::endl << std::endl;
+	std::cout << std::endl << "tree height: " << tree_1.tree_height() << std::endl;
+
+	std::cout << std::endl << "Breadth - First Search: ";
+	tree_1.BFS();
+	std::cout << std::endl;
 
 	tree_1.del(9); tree_1.print_in_order();
 	tree_1.del(30);	tree_1.print_in_order();
@@ -189,6 +214,9 @@ int main()
 	tree_1.del(18);	tree_1.print_in_order();
 	tree_1.del(2);	tree_1.print_in_order();
 
-	std::cout << std::endl << "tree height: " << tree_1.tree_height() << std::endl << std::endl;
+	std::cout << std::endl << "tree height: " << tree_1.tree_height() << std::endl;
+
+	std::cout << std::endl << "Breadth - First Search: ";
+	tree_1.BFS();
 }
 
