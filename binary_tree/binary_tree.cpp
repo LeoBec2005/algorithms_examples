@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include <stack>
 
 struct Node {
 	int data;
@@ -21,6 +22,14 @@ private:
 
 	int previous_value(int x) {
 		Node* temp = head;
+		while (temp->data != x) {
+			if (temp->data > x) {
+				temp = temp->left;
+			}
+			else if (temp->data < x) {
+				temp = temp->right;
+			}
+		}
 		temp = temp->left;
 
 		while (temp->right != nullptr) {
@@ -163,19 +172,38 @@ public:
 
 	void BFS() {
 		if (head == nullptr) return;
-		std::queue<Node*> data_queue;
-		Node* node;
-		data_queue.push(head);
+		std::queue<Node*> node_queue;
+		Node* temp;
+		node_queue.push(head);
 
-		while (data_queue.empty() == 0) {
-			node = data_queue.front();
-			data_queue.pop();
-			std::cout << node->data << " , ";
-			if (node->left != nullptr) {
-				data_queue.push(node->left);
+		while (node_queue.empty() == 0) {
+			temp = node_queue.front();
+			node_queue.pop();
+			std::cout << temp->data << " , ";
+			if (temp->left != nullptr) {
+				node_queue.push(temp->left);
 			}
-			if (node->right != nullptr) {
-				data_queue.push(node->right);
+			if (temp->right != nullptr) {
+				node_queue.push(temp->right);
+			}
+		}
+		std::cout << std::endl;
+	}
+
+	void in_order_iterative() {
+		std::stack<Node*> node_stack;
+		Node* temp = head;
+
+		while (temp != nullptr or node_stack.empty() == false) {
+			if (temp != nullptr) {
+				node_stack.push(temp);
+				temp = temp->left;
+			}
+			else {
+				temp = node_stack.top();
+				node_stack.pop();
+				std::cout << temp->data << " , ";
+				temp = temp->right;
 			}
 		}
 		std::cout << std::endl;
@@ -218,5 +246,9 @@ int main()
 
 	std::cout << std::endl << "Breadth - First Search: ";
 	tree_1.BFS();
+
+	std::cout << std::endl << "InOrder Iterative: ";
+	tree_1.in_order_iterative();
+	std::cout << std::endl;
 }
 
